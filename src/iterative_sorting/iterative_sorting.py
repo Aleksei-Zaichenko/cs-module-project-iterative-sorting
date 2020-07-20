@@ -8,7 +8,7 @@ def selection_sort(arr):
         # Your code here
         for j in range(i+1, len(arr)):
             if arr[smallest_index] > arr[j]:
-                smallest_index = j 
+                smallest_index = j
 
         # TO-DO: swap
         # Your code here
@@ -32,6 +32,7 @@ def bubble_sort(arr):
 
     return arr
 
+
 '''
 STRETCH: implement the Counting Sort function below
 
@@ -49,8 +50,40 @@ buckets.
 
 What is the time and space complexity of the counting sort algorithm?
 '''
+# space complexity is 0(n)
+# time complexity is 0(n)
+
 def counting_sort(arr, maximum=None):
     # Your code here
 
+    if len(arr) > 0:
+        # check for negative numbers:
+        foundNegative = False
+        index = 0
+        while not foundNegative or index < len(arr):
+            if arr[index] < 0:
+                foundNegative = True
+                return "Error, negative numbers not allowed in Count Sort"
+            index += 1
 
-    return arr
+        # if negative numbers were not found, counting sort can be applied
+        buckets = [0] * (len(arr)+ 1)
+
+        for i in arr:
+            buckets[i] += 1
+
+        i = 0
+        for a in range(len(arr)+ 1):
+            temp = buckets[a]
+            buckets[a] = i
+            i += temp
+
+        result = [None] * len(arr)
+
+        for index in arr:
+            result[buckets[index]] = index
+            buckets[index] += 1
+
+        return result
+    else: #if size is 0, return an empty array
+        return []
